@@ -29,8 +29,13 @@ So given a list of all possible values of x, We can easily calculate the CDF for
 
 ```python
 def calculate_cdf(lst, X):
-    
-    pass
+    #initialize var count
+    count = 0
+    for i in lst:
+        if i <= X:
+            count += 1
+    cumulative_X = count / len(lst)
+    return round(cumulative_X, 3)
 
 # test data
 test_lst = [1,2,3]
@@ -57,8 +62,11 @@ Perform the following steps in the cell below:
 
 
 ```python
-dice_lst = None
-dice_cum = None
+dice_lst = [1,2,3,4,5,6]
+dice_cum = []
+
+for i in dice_lst: 
+    dice_cum.append(calculate_cdf(dice_lst, i))
 
 dice_cum
 
@@ -79,11 +87,18 @@ Following this, we now have a list of possible values and a second list containi
 
 
 ```python
-# Your code here
+import matplotlib.pyplot as plt
+%matplotlib inline
+plt.style.use('ggplot')
+
+plt.bar(dice_lst, dice_cum, width=0.5);
+plt.title('Dice Roll Cumulative Distribution Function');
+plt.xlabel('Dice Roll Values');
+plt.ylabel('Cumulative Probabilities');
 ```
 
 
-![png](index_files/index_7_0.png)
+![png](output_7_0.png)
 
 
 ## Level Up (optional)
@@ -98,11 +113,19 @@ You would need to perform these steps
 
 
 ```python
-# Your code here
+import numpy as np
+sample = [1,2,3,4,5,6]
+hist = np.histogram(sample, bins=6, range=(1,7), density=True)
+plt.scatter(hist[1][:-1], np.cumsum(hist[0]))
+plt.title('Dice Roll Cumulative Distribution');
+plt.xlabel('Dice Values');
+plt.ylabel('Cumulative Probability')
+plt.yticks(np.linspace(0,1,num=7))
+plt.show()
 ```
 
 
-![png](index_files/index_9_0.png)
+![png](output_9_0.png)
 
 
 ## Summary 
